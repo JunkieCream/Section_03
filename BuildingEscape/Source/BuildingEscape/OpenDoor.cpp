@@ -28,7 +28,6 @@ void UOpenDoor::BeginPlay()
 	//Door rotation
 	ObjRotation.Add(0, -90, 0);
 	Owner->SetActorRotation(ObjRotation);
-	
 }
 
 
