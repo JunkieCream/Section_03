@@ -18,7 +18,7 @@ void UPositionReporter::BeginPlay()
 {
 	Super::BeginPlay();
 
-
+	//Report current coordinates of object
 	FString ObjName = GetOwner()->GetName();
 	FString ObjPosition = GetOwner()->GetActorLocation().ToString();
 
