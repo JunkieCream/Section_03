@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Grabber.h"
+#include "Runtime/Engine/Public/DrawDebugHelpers.h"
 #include "Gameframework/Actor.h"
 
 #define OUT
@@ -42,10 +43,16 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 		OUT PlayerViewRotation
 	);
 	// TODO Log out to test
-	UE_LOG(LogTemp, Warning, TEXT("Location: %s Position: %s"), 
+	/*UE_LOG(LogTemp, Warning, TEXT("Location: %s Position: %s"), 
 		*PlayerViewLocation.ToString(),
 		*PlayerViewRotation.ToString()
-	);
+	);*/
+
+	FVector LineTraceEnd = PlayerViewLocation + PlayerViewRotation.Vector()*Reach;
+	// Draw red trace for
+	DrawDebugLine(
+		GetWorld(), PlayerViewLocation, LineTraceEnd, FColor(255,0,0), false,0.f,0.f,10.f
+		);
 
 	// Ray-cast out to reach distance
 
