@@ -45,5 +45,5 @@ private:
 	
 	AActor* ActorThatOpens;
 
-	AActor *Owner;
+	AActor* Owner;
 };
