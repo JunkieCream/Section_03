@@ -22,6 +22,8 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	void FindPhysicksComponent();
+
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
@@ -35,5 +37,16 @@ private:
 
 	// Ray-cast and grab what's in reach
 	void Grab();
+
+	// When grab button released
 	void Release();
+
+	// Look for physics handle component
+	void FindPhysicsHandle();
+
+	// Setup attached input component
+	void SetupInputComp();
+
+	// Return hit for first physics body in reach
+	FHitResult GetFirstPhysBodyInReach() const;
 };
