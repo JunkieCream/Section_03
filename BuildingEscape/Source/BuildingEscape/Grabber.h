@@ -47,5 +47,10 @@ private:
 	void SetupInputComp();
 
 	// Return hit for first physics body in reach
-	FHitResult GetFirstPhysBodyInReach() const;
+	FHitResult GetFirstPhysBodyInReach();
+
+	// Return the location of grab point
+	FVector GetLineEnd();
+
+	FVector GetLineStart();
 };
