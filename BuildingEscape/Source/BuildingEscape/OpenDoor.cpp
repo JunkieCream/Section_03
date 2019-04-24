@@ -3,6 +3,8 @@
 #include "OpenDoor.h"
 #include "Gameframework/Actor.h"
 
+#define OUT
+
 // Sets default values for this component's properties
 UOpenDoor::UOpenDoor()
 {
@@ -19,10 +21,39 @@ void UOpenDoor::BeginPlay()
 {
 	Super::BeginPlay();
 
-	ActorThatOpens = GetWorld()->GetFirstPlayerController()->GetPawn();
-
 	// Finding the owning Actor
 	Owner = GetOwner();
+}
+
+// Called every frame
+void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	// Poll the Trigger Volume every frame	
+	//Open the door when actor that could open is in Volume
+	if (GetTotalMassOfActorsOnPlate() > 50.0)
+	{
+		LastDoorOpenTime = GetWorld()->GetTimeSeconds();
+		DoorOpening();
+	}
+	else if ((LastDoorOpenTime+DoorCloseDelay) <= GetWorld()->GetTimeSeconds())
+	{
+		DoorClosing();
+	}
+	
+}
+
+float UOpenDoor::GetTotalMassOfActorsOnPlate()
+{
+	float TotalMass = 0.f;
+
+	// Find all overlaping actors
+	TArray<AActor*> OverlappingActors;
+	PressurePlate->GetOverlappingActors(OUT OverlappingActors);
+	// Iterate through them adding their masses to total mass
+
+	return TotalMass;
 }
 
 void UOpenDoor::DoorOpening()
@@ -35,25 +66,5 @@ void UOpenDoor::DoorClosing()
 {
 	//Door rotation
 	Owner->SetActorRotation(FRotator(0, CloseAngle, 0));
-}
-
-
-// Called every frame
-void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// Poll the Trigger Volume every frame	
-	//Open the door when actor that could open is in Volume
-	if (PressurePlate->IsOverlappingActor(ActorThatOpens))
-	{
-		LastDoorOpenTime = GetWorld()->GetTimeSeconds();
-		DoorOpening();
-	}
-	else if ((LastDoorOpenTime+DoorCloseDelay)<=GetWorld()->GetTimeSeconds())
-	{
-		DoorClosing();
-	}
-	
 }
 

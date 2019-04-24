@@ -22,8 +22,12 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	// Functions for change door rotation
 	void DoorOpening();
 	void DoorClosing();
+
+	// Function that count mass of all actors on trigger volume in kg
+	float GetTotalMassOfActorsOnPlate();
 
 public:	
 	// Called every frame
@@ -42,8 +46,7 @@ private:
 	ATriggerVolume* PressurePlate;
 
 	float LastDoorOpenTime;
-	
-	AActor* ActorThatOpens;
 
 	AActor* Owner;
 };
+
