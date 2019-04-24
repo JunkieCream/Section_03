@@ -2,10 +2,11 @@
 
 #pragma once
 
+//#include "Engine/World.h"
 #include "CoreMinimal.h"
 #include "Engine/TriggerVolume.h"
 #include "Components/ActorComponent.h"
-//#include "Engine/World.h"
+#include "Components/PrimitiveComponent.h"
 #include "OpenDoor.generated.h"
 
 
