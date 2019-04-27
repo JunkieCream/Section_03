@@ -22,10 +22,9 @@ void UOpenDoor::BeginPlay()
 	Super::BeginPlay();
 
 	// Finding the owning Actor
-	Owner = GetOwner();
 	if (!PressurePlate)
 	{
-		UE_LOG(LogTemp, Error, TEXT("There is no Pressure Plate!"));
+		UE_LOG(LogTemp, Error, TEXT("There is no Pressure Plate for %s!"), *GetOwner()->GetName());
 	}
 }
 
@@ -36,13 +35,13 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 
 	// Poll the Trigger Volume every frame	
 	// Open the door when actor that could open is in Volume
-	if (GetTotalMassOfActorsOnPlate() > 50.0)
+	if (GetTotalMassOfActorsOnPlate() >= TriggerMass)
 	{
-		DoorOpening();
+		OpenRequest.Broadcast();
 	}
 	else
 	{
-		DoorClosing();
+		CloseRequest.Broadcast();
 	}
 	
 }
@@ -62,19 +61,5 @@ float UOpenDoor::GetTotalMassOfActorsOnPlate()
 		TotalMass += OverActor->FindComponentByClass<UPrimitiveComponent>()->GetMass();
 	}
 	return TotalMass;
-}
-
-void UOpenDoor::DoorOpening()
-{
-	//Door rotation
-	if (!Owner) { return; }
-	OpenRequest.Broadcast();
-}
-
-void UOpenDoor::DoorClosing()
-{
-	//Door rotation
-	if (!Owner) { return; }
-	CloseRequest.Broadcast();
 }
 

@@ -9,7 +9,7 @@
 #include "Components/PrimitiveComponent.h"
 #include "OpenDoor.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnOpenRequest);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDoorEvent);
 //DECLARE_MULTICAST_DELEGATE(FOnCloseRequest);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -23,18 +23,15 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	// Calls for change door rotation
 	UPROPERTY(BlueprintAssignable)
-		FOnOpenRequest OpenRequest;
+		FDoorEvent OpenRequest;
 	UPROPERTY(BlueprintAssignable)
-		FOnOpenRequest CloseRequest;
+		FDoorEvent CloseRequest;
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
-
-	// Functions for change door rotation
-	void DoorOpening();
-	void DoorClosing();
 
 	// Function that count mass of all actors on trigger volume in kg
 	float GetTotalMassOfActorsOnPlate();
@@ -42,6 +39,7 @@ protected:
 private:
 	UPROPERTY(EditAnywhere)
 	ATriggerVolume* PressurePlate = nullptr;
-	AActor* Owner = nullptr;
+	UPROPERTY(EditAnywhere)
+	float TriggerMass = 25.f;
 };
 
