@@ -41,19 +41,7 @@ protected:
 	
 private:
 	UPROPERTY(EditAnywhere)
-	float DoorCloseDelay = 0.2f;
-
-	UPROPERTY(VisibleAnywhere)
-	float CloseAngle = 90.0;
-
-	UPROPERTY(VisibleAnywhere)
-	float OpenAngle = 0.0;
-
-	UPROPERTY(EditAnywhere)
 	ATriggerVolume* PressurePlate = nullptr;
-
-	float LastDoorOpenTime;
-
 	AActor* Owner = nullptr;
 };
 

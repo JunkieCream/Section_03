@@ -35,13 +35,12 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// Poll the Trigger Volume every frame	
-	//Open the door when actor that could open is in Volume
+	// Open the door when actor that could open is in Volume
 	if (GetTotalMassOfActorsOnPlate() > 50.0)
 	{
-		LastDoorOpenTime = GetWorld()->GetTimeSeconds();
 		DoorOpening();
 	}
-	else if ((LastDoorOpenTime+DoorCloseDelay) <= GetWorld()->GetTimeSeconds())
+	else
 	{
 		DoorClosing();
 	}
