@@ -9,6 +9,8 @@
 #include "Components/PrimitiveComponent.h"
 #include "OpenDoor.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnOpenRequest);
+//DECLARE_MULTICAST_DELEGATE(FOnCloseRequest);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BUILDINGESCAPE_API UOpenDoor : public UActorComponent
@@ -18,6 +20,13 @@ class BUILDINGESCAPE_API UOpenDoor : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UOpenDoor();
+	// Called every frame
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+	UPROPERTY(BlueprintAssignable)
+		FOnOpenRequest OpenRequest;
+	UPROPERTY(BlueprintAssignable)
+		FOnOpenRequest CloseRequest;
 
 protected:
 	// Called when the game starts
@@ -29,10 +38,7 @@ protected:
 
 	// Function that count mass of all actors on trigger volume in kg
 	float GetTotalMassOfActorsOnPlate();
-
-public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	
 private:
 	UPROPERTY(EditAnywhere)
 	float DoorCloseDelay = 0.2f;

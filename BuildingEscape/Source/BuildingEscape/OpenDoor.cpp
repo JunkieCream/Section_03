@@ -69,13 +69,13 @@ void UOpenDoor::DoorOpening()
 {
 	//Door rotation
 	if (!Owner) { return; }
-	Owner->SetActorRotation(FRotator(0, OpenAngle, 0));
+	OpenRequest.Broadcast();
 }
 
 void UOpenDoor::DoorClosing()
 {
 	//Door rotation
 	if (!Owner) { return; }
-	Owner->SetActorRotation(FRotator(0, CloseAngle, 0));
+	CloseRequest.Broadcast();
 }
 
